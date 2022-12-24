@@ -1,0 +1,24 @@
+{
+  "name": "lsc-utilities",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf ./dist/ && tsc",
+    "start": "node dist/index.js",
+    "fullstart": "rm -rf ./dist/ && tsc && node dist/index.js",
+    "deploystart": "rm -rf ./dist/ && tsc && node dist/deploy.js && pm2 start"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@sapphire/stopwatch": "^1.5.0",
+    "@sapphire/time-utilities": "^1.7.8",
+    "@types/node": "^18.11.17",
+    "@types/uuid": "^9.0.0",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "pino": "^8.8.0",
+    "pino-pretty": "^9.1.1",
+    "typescript": "^4.9.4",
+    "uuid": "^9.0.0"
+  }
+}
