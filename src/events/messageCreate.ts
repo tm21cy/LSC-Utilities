@@ -6,6 +6,8 @@ import {
   Message,
 } from "discord.js";
 import channelIds from "../channelIds";
+import roleids from "../roleids";
+
 
 module.exports = {
   name: "messageCreate",
@@ -16,6 +18,19 @@ module.exports = {
       (message.author.bot && message.embeds.length == 0)
     )
       return;
+
+    const source = message.content;
+    const regex = /[0-9]{13,}/g;
+    let result = source.match(regex);
+    let set = [...new Set(result)];
+    let resarr = Array.from(set).filter(a => {
+      if (roleids.includes(a)) return false; else return true
+    })
+    if (resarr && resarr.length != 0) {
+      message.channel.send({
+        content: `${resarr.join(" ")}`,
+      });
+    }
     message
       .startThread({
         name: `${message.author.tag} - Report Thread`,
