@@ -20,7 +20,7 @@ module.exports = {
       return;
 
     const source = message.content;
-      const regex = /^[0-9]{13,}$/g;
+      const regex = /(?<!\S)\d{13,}(?!\S)/g;
     let result = source.match(regex);
     let set = [...new Set(result)];
     let resarr = Array.from(set).filter(a => {
