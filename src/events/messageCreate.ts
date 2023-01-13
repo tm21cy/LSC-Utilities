@@ -20,11 +20,11 @@ module.exports = {
       return;
 
     const source = message.content;
-    const regex = /[0-9]{13,}/g;
+      const regex = /^[0-9]{13,}$/g;
     let result = source.match(regex);
     let set = [...new Set(result)];
     let resarr = Array.from(set).filter(a => {
-      if (roleids.includes(a)) return false; else return true
+      return !roleids.includes(a);
     })
     if (resarr && resarr.length != 0) {
       message.channel.send({
