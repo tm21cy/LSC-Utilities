@@ -7,6 +7,9 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 
+/**
+ * Opens a generic anon-report start embed, with the attached button routing to the appropriate channel.
+ */
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("anon-report")
@@ -52,16 +55,20 @@ module.exports = {
             name: "Other",
             value: "other",
           },
+          {
+            name: "admin",
+            value: "admin"
+          }
         )
     ),
   async execute(interaction: ChatInputCommandInteraction) {
     try {
-      const opt = interaction.options.getString("category");
+      const opt = interaction.options.getString("category"); // Which channel should the report be sent to?
       const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel("Start")
           .setStyle(ButtonStyle.Success)
-          .setCustomId(`anon-start-${opt}`)
+          .setCustomId(`anon_start-${opt}`)
       );
       const embed = new EmbedBuilder()
         .setTitle("Anonymous Report")
@@ -69,13 +76,13 @@ module.exports = {
           "When you have gathered all of your evidence, please click the Start button to initiate an anonymous report modal. Please have **image links** ready, not raw images. You will be asked to input your report into a text box in a private modal - no user information is stored regarding this report. Please note that your report must fit inside one modal text input - for any longer reports, we suggest using a Google Doc or other file hosting service.\n\nWhen you feel ready, click Start to begin. Please note: abuse of this system may result in a ban from LSC."
         )
         .setColor("Blurple");
-      interaction.reply({
+      await interaction.reply({
         embeds: [embed],
         components: [row],
         ephemeral: true,
       });
     } catch (err) {
-      interaction.reply({
+      await interaction.reply({
         content: `Looks like an error occurred - please let a member of Management know if this persists.`,
         ephemeral: true,
       });

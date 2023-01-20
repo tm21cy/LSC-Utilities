@@ -6,6 +6,9 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 
+/**
+ * Add, remove, create, and set the Mentionable field of roles.
+ */
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("role")
@@ -100,7 +103,7 @@ module.exports = {
       if (
         !(interaction.member?.permissions as PermissionsBitField).has(
           PermissionsBitField.Flags.ManageRoles
-        )
+        ) // If the user can't manage roles with their role permset, return.
       ) {
         return interaction.reply({
           content:
@@ -176,7 +179,7 @@ module.exports = {
           });
       }
     } catch (err) {
-      interaction.reply({
+      await interaction.reply({
         content: `Looks like an error occurred - please let a member of Management know if this persists.`,
         ephemeral: true,
       });

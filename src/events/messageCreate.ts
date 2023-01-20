@@ -8,7 +8,9 @@ import {
 import channelIds from "../channelIds";
 import roleids from "../roleids";
 
-
+/**
+ * Tracks for attached IDs to reports.
+ */
 module.exports = {
   name: "messageCreate",
   once: false,
@@ -20,11 +22,11 @@ module.exports = {
       return;
 
     const source = message.content;
-      const regex = /(?<!\S)\d{13,}(?!\S)/g;
+      const regex = /(?<!\S)\d{13,}(?!\S)/g; // Searches for a distinct, non-substring ID in the message.
     let result = source.match(regex);
-    let set = [...new Set(result)];
+    let set = [...new Set(result)]; // Removes duplicates.
     let resarr = Array.from(set).filter(a => {
-      return !roleids.includes(a);
+      return !roleids.includes(a); // Returns to array, without ping role IDs.
     })
     if (resarr && resarr.length != 0) {
       message.channel.send({

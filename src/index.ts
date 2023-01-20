@@ -51,6 +51,46 @@ for (const file of commandFiles) {
 	client.commands.set(command.data?.name, command) // Synchronizes command execution files into the command handler.
 }
 
+/* Button Handling */
+
+client.buttons = new Collection();
+const buttonPath = path.join(__dirname, "buttons");
+const buttonFiles = fs
+	.readdirSync(buttonPath)
+	.filter((file) => file.endsWith(".js"));
+for (const file of buttonFiles) {
+	const filePath = path.join(buttonPath, file);
+	const button = require(filePath);
+	client.buttons.set(button.name, button);
+}
+
+/* Modal Handling */
+
+client.modals = new Collection();
+const modalPath = path.join(__dirname, "modals");
+const modalFiles = fs
+	.readdirSync(modalPath)
+	.filter((file) => file.endsWith(".js"));
+for (const file of modalFiles) {
+	const filePath = path.join(modalPath, file);
+	const modal = require(filePath);
+	client.modals.set(modal.name, modal);
+}
+
+/* Context Handling */
+
+client.contexts = new Collection();
+const contextPath = path.join(__dirname, "contexts");
+const contextFiles = fs
+	.readdirSync(contextPath)
+	.filter((file) => file.endsWith(".js"));
+for (const file of contextFiles) {
+	const filePath = path.join(contextPath, file);
+	const context = require(filePath);
+	client.contexts.set(context.name, context);
+}
+
+/* Event Handling */
 
 const eventsPath = path.join(__dirname, "events")
 const eventFiles = fs
@@ -81,6 +121,9 @@ if (debug) {
 declare module "discord.js" {
 	export interface Client {
 		commands: Collection<unknown, any> // This declares a command attribute on the Client interface, which resolves null pointing during typical execution.
+		buttons: Collection<unknown, any> // See above for the rest of these.
+		contexts: Collection<unknown, any>
+		modals: Collection<unknown, any>
 	}
 }
 
